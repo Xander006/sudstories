@@ -498,10 +498,9 @@ code {
     grid-template-columns: 1fr;
   }
 
-  .topbar,
   .topbar-links {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.75rem;
   }
 
   .hero-grid {
