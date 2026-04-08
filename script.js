@@ -1,14 +1,14 @@
 // Remplace les valeurs ci-dessous par tes vrais liens Apple Podcasts et tes métadonnées.
 const episodes = [
   {
-    title: "Épisode 01 — Lancer un projet entre mer et montagne",
+    title: "Épisode 01 — De Paris à Grasse : les coulisses d'un métier aussi rare que fascinant",
     guest: "Manon, parfumeur",
-    date: "Avril 2026",
-    duration: "32 min",
+    date: "5 avril 2026",
+    duration: "58 min",
     summary:
-      "Un premier échange sur le déclic, la prise de risque et la manière dont le Sud transforme un projet en aventure concrète.",
+      "Comment devient-on parfumeur quand on quitte Paris pour Grasse ? Manon raconte les coulisses d'un métier plus rare qu'être astronaute — moins de 500 parfumeurs dans le monde — et ce que le Sud change dans une trajectoire de vie.",
     quote:
-      "Ici, on ne vend pas un décor. On raconte ce que le territoire change dans une trajectoire de vie.",
+      "Moins de 500 parfumeurs dans le monde. C'est plus rare qu'être astronaute.",
     listenUrl: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
     notesUrl: "#"
   }
