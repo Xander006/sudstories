@@ -2,7 +2,7 @@
 const episodes = [
   {
     title: "Épisode 01 — Lancer un projet entre mer et montagne",
-    guest: "Invité à confirmer",
+    guest: "Manon, parfumeur",
     date: "Avril 2026",
     duration: "32 min",
     summary:
