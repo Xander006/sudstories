@@ -110,7 +110,6 @@ code {
 
 .brand {
   font-weight: 800;
-  color: var(--accent);
 }
 
 .topbar-links {
@@ -148,6 +147,12 @@ code {
   line-height: 0.98;
   letter-spacing: -0.04em;
   max-width: 11ch;
+}
+
+.hero-copy h1 {
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  font-weight: 900;
+  color: #ffffff;
 }
 
 
