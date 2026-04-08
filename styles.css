@@ -151,7 +151,40 @@ code {
   max-width: 11ch;
 }
 
+.hero-copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  max-width: 34rem;
+  padding-block: 12px;
+}
 
+.hero-copy h1 {
+  display: grid;
+  gap: 0.2rem;
+  max-width: 9.5ch;
+  font-size: clamp(2.7rem, 5.8vw, 4.9rem);
+  line-height: 0.92;
+}
+
+.hero-title-main,
+.hero-title-sub {
+  display: block;
+}
+
+.hero-title-sub {
+  color: var(--accent);
+}
+
+.hero-tagline {
+  max-width: 33ch;
+  margin-top: 18px;
+  color: var(--accent-soft);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+}
 
 .intro,
 .manifesto p,
@@ -166,7 +199,7 @@ code {
 
 .intro {
   max-width: 60ch;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
 .hero-actions {
@@ -243,6 +276,7 @@ code {
   display: flex;
   justify-content: center;
   margin: 0;
+  align-self: center;
 }
 
 .cover-image {
@@ -590,6 +624,15 @@ code {
 
   .hero-grid {
     padding-top: 22px;
+  }
+
+  .hero-copy h1 {
+    max-width: 10.5ch;
+    font-size: clamp(2.4rem, 12vw, 3.6rem);
+  }
+
+  .hero-tagline {
+    max-width: 28ch;
   }
 
   .cover-image {
