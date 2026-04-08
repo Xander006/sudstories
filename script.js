@@ -9,7 +9,7 @@ const episodes = [
       "Un premier échange sur le déclic, la prise de risque et la manière dont le Sud transforme un projet en aventure concrète.",
     quote:
       "Ici, on ne vend pas un décor. On raconte ce que le territoire change dans une trajectoire de vie.",
-    listenUrl: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
+    listenUrl: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
     notesUrl: "#"
   }
 ];
