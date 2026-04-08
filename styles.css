@@ -423,6 +423,23 @@ code {
   color: #000;
 }
 
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-copy {
+  animation: hero-enter 0.7s ease both;
+}
+
+.cover-card {
+  animation: hero-enter 0.7s ease 0.15s both;
+}
+
+.topbar {
+  animation: hero-enter 0.5s ease both;
+}
+
 .topbar-links a.nav-active {
   color: var(--accent);
 }
