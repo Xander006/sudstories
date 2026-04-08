@@ -110,6 +110,8 @@ code {
 
 .brand {
   font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--accent);
 }
 
 .topbar-links {
