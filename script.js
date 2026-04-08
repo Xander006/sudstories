@@ -4,6 +4,7 @@ const episodes = [
     title: "Épisode 01 — De Paris à Grasse : les coulisses d'un métier aussi rare que fascinant",
     guest: "Manon, parfumeur",
     date: "5 avril 2026",
+    publishedAt: "2026-04-05",
     duration: "58 min",
     summary:
       "Comment devient-on parfumeur quand on quitte Paris pour Grasse ? Manon raconte les coulisses d'un métier plus rare qu'être astronaute — moins de 500 parfumeurs dans le monde — et ce que le Sud change dans une trajectoire de vie.",
@@ -17,7 +18,8 @@ const episodes = [
 const platforms = {
   apple: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
   spotify: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
-  amazon: "https://music.amazon.com/podcasts/cdf06260-950b-40bd-9c6b-81dc41aa478e/sud-stories"
+  amazon: "https://music.amazon.com/podcasts/cdf06260-950b-40bd-9c6b-81dc41aa478e/sud-stories",
+  rss: "https://feed.ausha.co/5J8awtVWNgxv"
 };
 
 const featuredEpisode = document.querySelector("#featured-episode");
@@ -25,6 +27,17 @@ const episodeList = document.querySelector("#episode-list");
 
 function isRealUrl(url) {
   return typeof url === "string" && url.trim() !== "" && url !== "#";
+}
+
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const published = new Date(dateStr);
+  const days = (Date.now() - published.getTime()) / (1000 * 60 * 60 * 24);
+  return days <= 14;
+}
+
+function buildShareButton(episode) {
+  return `<button class="share-btn" data-share-url="${episode.listenUrl}" data-share-title="${episode.title}" aria-label="Partager cet épisode">Partager</button>`;
 }
 
 function buildExternalLink(className, href, label, ariaLabel) {
@@ -53,17 +66,20 @@ function renderFeaturedEpisode(episode) {
     .filter(Boolean)
     .join("");
 
+  const nouveauPill = isNew(episode.publishedAt) ? `<span class="pill pill-new">Nouveau</span>` : "";
+
   featuredEpisode.innerHTML = `
     <div class="featured-copy">
       <div class="featured-meta">
         <span class="pill">À la une</span>
+        ${nouveauPill}
         <span class="pill">${episode.date}</span>
         <span class="pill">${episode.duration}</span>
       </div>
       <h3>${episode.title}</h3>
       <p><strong>${episode.guest}</strong></p>
       <p>${episode.summary}</p>
-      <div class="featured-links">${links}</div>
+      <div class="featured-links">${links}${buildShareButton(episode)}</div>
     </div>
     <aside class="featured-quote">
       <p>"${episode.quote || episode.summary}"</p>
@@ -92,16 +108,19 @@ function buildEpisodeCard(episode) {
     .filter(Boolean)
     .join("");
 
+  const nouveauPill = isNew(episode.publishedAt) ? `<span class="pill pill-new">Nouveau</span>` : "";
+
   return `
     <article class="episode-card">
       <div class="episode-meta">
+        ${nouveauPill}
         <span class="pill">${episode.date}</span>
         <span class="pill">${episode.duration}</span>
       </div>
       <h3>${episode.title}</h3>
       <p><strong>${episode.guest}</strong></p>
       <p>${episode.summary}</p>
-      <div class="episode-links">${links}</div>
+      <div class="episode-links">${links}${buildShareButton(episode)}</div>
     </article>
   `;
 }
@@ -156,6 +175,26 @@ if (episodesTitle && episodes.length === 1) {
   if (episodesKicker) episodesKicker.textContent = "Première publication";
 }
 
+const heroCount = document.querySelector("#hero-episode-count");
+const heroLabel = document.querySelector("#hero-episode-label");
+if (heroCount) heroCount.textContent = episodes.length;
+if (heroLabel) heroLabel.textContent = episodes.length === 1 ? "épisode publié" : "épisodes publiés";
+
 renderFeaturedEpisode(episodes[0]);
 renderEpisodeList(episodes);
 wirePlatformLinks();
+
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest("[data-share-url]");
+  if (!btn) return;
+  const url = btn.dataset.shareUrl;
+  const title = btn.dataset.shareTitle;
+  if (navigator.share) {
+    try { await navigator.share({ title, url }); } catch (_) {}
+  } else {
+    await navigator.clipboard.writeText(url);
+    const original = btn.textContent;
+    btn.textContent = "Lien copié !";
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }
+});
