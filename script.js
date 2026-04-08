@@ -10,7 +10,7 @@ const episodes = [
     quote:
       "Moins de 500 parfumeurs dans le monde. C'est plus rare qu'être astronaute.",
     listenUrl: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
-    notesUrl: "#"
+    notesUrl: ""
   }
 ];
 
