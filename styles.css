@@ -126,8 +126,8 @@ code {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
+  gap: 16px;
   align-items: start;
   padding: 40px 0 32px;
 }
@@ -155,15 +155,15 @@ code {
   display: grid;
   align-content: center;
   justify-items: start;
-  max-width: 34rem;
+  max-width: 32rem;
   padding-block: 8px;
 }
 
 .hero-copy h1 {
   display: grid;
   gap: 0.12rem;
-  max-width: 9.6ch;
-  font-size: clamp(1.85rem, 3.35vw, 3rem);
+  max-width: 10.2ch;
+  font-size: clamp(2.05rem, 3.8vw, 3.3rem);
   font-weight: 800;
   line-height: 0.96;
   letter-spacing: -0.05em;
@@ -196,7 +196,7 @@ code {
 }
 
 .intro {
-  max-width: 46ch;
+  max-width: 42ch;
   margin-top: 20px;
 }
 
@@ -272,7 +272,7 @@ code {
 
 .cover-card {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0;
   align-self: start;
   padding-top: 0.35rem;
