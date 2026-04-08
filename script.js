@@ -101,44 +101,61 @@ function renderFeaturedEpisode(episode) {
   `;
 }
 
+const PAGE_SIZE = 3;
+let visibleCount = PAGE_SIZE;
+
+function buildEpisodeCard(episode) {
+  const links = [
+    buildExternalLink(
+      "text-link",
+      episode.listenUrl,
+      "Écouter",
+      `Écouter ${episode.title}, ouverture dans un nouvel onglet`
+    ),
+    buildExternalLink(
+      "text-link",
+      episode.notesUrl,
+      "Notes",
+      `Voir les notes de ${episode.title}, ouverture dans un nouvel onglet`
+    )
+  ]
+    .filter(Boolean)
+    .join("");
+
+  return `
+    <article class="episode-card">
+      <div class="episode-meta">
+        <span class="pill">${episode.date}</span>
+        <span class="pill">${episode.duration}</span>
+      </div>
+      <h3>${episode.title}</h3>
+      <p><strong>${episode.guest}</strong></p>
+      <p>${episode.summary}</p>
+      <div class="episode-links">${links}</div>
+    </article>
+  `;
+}
+
 function renderEpisodeList(items) {
   const rest = items.slice(1);
+  const visible = rest.slice(0, visibleCount);
+  const hasMore = visibleCount < rest.length;
 
-  episodeList.innerHTML = rest
-    .map(
-      (episode) => {
-        const links = [
-          buildExternalLink(
-            "text-link",
-            episode.listenUrl,
-            "Écouter",
-            `Écouter ${episode.title}, ouverture dans un nouvel onglet`
-          ),
-          buildExternalLink(
-            "text-link",
-            episode.notesUrl,
-            "Notes",
-            `Voir les notes de ${episode.title}, ouverture dans un nouvel onglet`
-          )
-        ]
-          .filter(Boolean)
-          .join("");
+  episodeList.innerHTML = visible.map(buildEpisodeCard).join("");
 
-        return `
-        <article class="episode-card">
-          <div class="episode-meta">
-            <span class="pill">${episode.date}</span>
-            <span class="pill">${episode.duration}</span>
-          </div>
-          <h3>${episode.title}</h3>
-          <p><strong>${episode.guest}</strong></p>
-          <p>${episode.summary}</p>
-          <div class="episode-links">${links}</div>
-        </article>
-      `;
-      }
-    )
-    .join("");
+  const existing = document.querySelector(".load-more-btn");
+  if (existing) existing.remove();
+
+  if (hasMore) {
+    const btn = document.createElement("button");
+    btn.className = "load-more-btn";
+    btn.textContent = `Voir plus d'épisodes (${rest.length - visibleCount} restants)`;
+    btn.addEventListener("click", () => {
+      visibleCount += PAGE_SIZE;
+      renderEpisodeList(items);
+    });
+    episodeList.after(btn);
+  }
 }
 
 function wirePlatformLinks() {

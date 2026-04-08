@@ -377,6 +377,25 @@ code {
   content: "→";
 }
 
+.load-more-btn {
+  display: block;
+  margin: 32px auto 0;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.load-more-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
 .featured-quote {
   padding: 22px;
   border-radius: var(--radius-lg);
