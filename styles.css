@@ -377,6 +377,17 @@ code {
   content: "→";
 }
 
+.button-follow {
+  background: #1db954;
+  color: #000;
+  border: none;
+}
+
+.button-follow:hover {
+  background: #1ed760;
+  color: #000;
+}
+
 .load-more-btn {
   display: block;
   margin: 32px auto 0;

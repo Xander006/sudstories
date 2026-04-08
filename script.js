@@ -9,7 +9,7 @@ const episodes = [
       "Comment devient-on parfumeur quand on quitte Paris pour Grasse ? Manon raconte les coulisses d'un métier plus rare qu'être astronaute — moins de 500 parfumeurs dans le monde — et ce que le Sud change dans une trajectoire de vie.",
     quote:
       "Moins de 500 parfumeurs dans le monde. C'est plus rare qu'être astronaute.",
-    listenUrl: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
+    listenUrl: "https://open.spotify.com/episode/3AEDAU8YAFku1jHu6mKN4l",
     notesUrl: ""
   }
 ];
@@ -147,6 +147,13 @@ function wirePlatformLinks() {
       `Ouvrir Sud Stories sur ${link.textContent.trim()}, ouverture dans un nouvel onglet`
     );
   });
+}
+
+const episodesTitle = document.querySelector("#episodes-title");
+const episodesKicker = document.querySelector("#episodes-title")?.closest(".section-heading")?.querySelector(".section-kicker");
+if (episodesTitle && episodes.length === 1) {
+  episodesTitle.textContent = "Le premier épisode";
+  if (episodesKicker) episodesKicker.textContent = "Première publication";
 }
 
 renderFeaturedEpisode(episodes[0]);
