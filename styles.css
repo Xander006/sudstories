@@ -155,35 +155,27 @@ code {
   display: grid;
   align-content: center;
   justify-items: start;
-  max-width: 34rem;
-  padding-block: 12px;
+  max-width: 38rem;
+  padding-block: 8px;
 }
 
 .hero-copy h1 {
   display: grid;
-  gap: 0.2rem;
-  max-width: 9.5ch;
-  font-size: clamp(2.7rem, 5.8vw, 4.9rem);
-  line-height: 0.92;
+  gap: 0.12rem;
+  max-width: 12ch;
+  font-size: clamp(2.45rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
-.hero-title-main,
-.hero-title-sub {
+.hero-title-line {
   display: block;
 }
 
-.hero-title-sub {
+.hero-title-accent {
   color: var(--accent);
-}
-
-.hero-tagline {
-  max-width: 33ch;
-  margin-top: 18px;
-  color: var(--accent-soft);
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1.45;
 }
 
 .intro,
@@ -198,8 +190,8 @@ code {
 }
 
 .intro {
-  max-width: 60ch;
-  margin-top: 18px;
+  max-width: 46ch;
+  margin-top: 24px;
 }
 
 .hero-actions {
@@ -627,12 +619,9 @@ code {
   }
 
   .hero-copy h1 {
-    max-width: 10.5ch;
-    font-size: clamp(2.4rem, 12vw, 3.6rem);
-  }
-
-  .hero-tagline {
-    max-width: 28ch;
+    max-width: 11ch;
+    font-size: clamp(2.15rem, 10.8vw, 3.35rem);
+    line-height: 0.98;
   }
 
   .cover-image {
