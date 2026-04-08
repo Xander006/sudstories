@@ -152,8 +152,7 @@ code {
 }
 
 .hero-copy h1 {
-  font-size: clamp(3.2rem, 9vw, 7rem);
-  font-weight: 900;
+  font-weight: 800;
   color: #ffffff;
 }
 
