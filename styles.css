@@ -36,7 +36,7 @@ figure {
 body {
   min-height: 100vh;
   color: var(--text);
-  font-family: Avenir Next, Futura, Trebuchet MS, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background:
     radial-gradient(circle at top, rgba(255, 225, 24, 0.15), transparent 32%),
     radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.14), transparent 25%),
@@ -161,12 +161,12 @@ code {
 
 .hero-copy h1 {
   display: grid;
-  gap: 0.18rem;
+  gap: 0.08rem;
   max-width: 10.5ch;
-  font-size: clamp(2.2rem, 4.4vw, 3.95rem);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.05rem, 4vw, 3.55rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.06em;
   text-wrap: balance;
 }
 
@@ -176,6 +176,12 @@ code {
 
 .hero-title-accent {
   color: var(--accent);
+}
+
+.eyebrow,
+.brand,
+.topbar-links a {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .intro,
@@ -620,8 +626,8 @@ code {
 
   .hero-copy h1 {
     max-width: 11ch;
-    font-size: clamp(2.15rem, 10.8vw, 3.35rem);
-    line-height: 0.98;
+    font-size: clamp(1.95rem, 9.8vw, 3rem);
+    line-height: 0.95;
   }
 
   .cover-image {
