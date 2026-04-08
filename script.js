@@ -11,36 +11,6 @@ const episodes = [
       "Ici, on ne vend pas un décor. On raconte ce que le territoire change dans une trajectoire de vie.",
     listenUrl: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
     notesUrl: "#"
-  },
-  {
-    title: "Épisode 02 — Reconversion, artisanat et nouveau rythme",
-    guest: "Invité à confirmer",
-    date: "Bientôt",
-    duration: "28 min",
-    summary:
-      "Une histoire de changement de vie, de travail manuel et de recherche d'équilibre dans le Sud.",
-    listenUrl: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
-    notesUrl: "#"
-  },
-  {
-    title: "Épisode 03 — Créer sans filtre sur la Côte d'Azur",
-    guest: "Invité à confirmer",
-    date: "Bientôt",
-    duration: "35 min",
-    summary:
-      "Création, image, liberté: un épisode sur les idées reçues autour du littoral et des trajectoires atypiques.",
-    listenUrl: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
-    notesUrl: "#"
-  },
-  {
-    title: "Épisode 04 — Entre business et qualité de vie",
-    guest: "Invité à confirmer",
-    date: "Bientôt",
-    duration: "30 min",
-    summary:
-      "Comment construire quelque chose de solide sans reproduire les vieux schémas de performance à tout prix.",
-    listenUrl: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
-    notesUrl: "#"
   }
 ];
 
