@@ -36,7 +36,7 @@ figure {
 body {
   min-height: 100vh;
   color: var(--text);
-  font-family: 'Montserrat', Avenir Next, Futura, sans-serif;
+  font-family: Avenir Next, Futura, Trebuchet MS, sans-serif;
   background:
     radial-gradient(circle at top, rgba(255, 225, 24, 0.15), transparent 32%),
     radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.14), transparent 25%),
@@ -149,11 +149,6 @@ code {
   line-height: 0.98;
   letter-spacing: -0.04em;
   max-width: 11ch;
-}
-
-.hero-copy h1 {
-  font-weight: 800;
-  color: #ffffff;
 }
 
 
