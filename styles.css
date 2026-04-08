@@ -423,6 +423,44 @@ code {
   color: #000;
 }
 
+.topbar-links a.nav-active {
+  color: var(--accent);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-card:nth-child(2).fade-in { transition-delay: 0.1s; }
+.info-card:nth-child(3).fade-in { transition-delay: 0.2s; }
+
+.rss-copy-btn {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 5px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  align-self: flex-start;
+}
+
+.rss-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
 .load-more-btn {
   display: block;
   margin: 32px auto 0;

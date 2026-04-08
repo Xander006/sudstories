@@ -185,6 +185,17 @@ renderEpisodeList(episodes);
 wirePlatformLinks();
 
 document.addEventListener("click", async (e) => {
+  const copyBtn = e.target.closest("[data-copy-url]");
+  if (copyBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    await navigator.clipboard.writeText(copyBtn.dataset.copyUrl);
+    const orig = copyBtn.textContent;
+    copyBtn.textContent = "Copié !";
+    setTimeout(() => { copyBtn.textContent = orig; }, 2000);
+    return;
+  }
+
   const btn = e.target.closest("[data-share-url]");
   if (!btn) return;
   const url = btn.dataset.shareUrl;
@@ -198,3 +209,32 @@ document.addEventListener("click", async (e) => {
     setTimeout(() => { btn.textContent = original; }, 2000);
   }
 });
+
+// Fade-in on scroll
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".section, .info-card, .platform-card").forEach(el => {
+  el.classList.add("fade-in");
+  fadeObserver.observe(el);
+});
+
+// Active nav on scroll
+const navLinks = document.querySelectorAll(".topbar-links a[href^='#']");
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove("nav-active"));
+      const active = document.querySelector(`.topbar-links a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add("nav-active");
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll("section[id]").forEach(s => navObserver.observe(s));
