@@ -1,7 +1,7 @@
 :root {
-  --bg: #0b3274;
-  --bg-deep: #061937;
-  --bg-warm: #114a9f;
+  --bg: #0c46eb;
+  --bg-deep: #082aa7;
+  --bg-warm: #2a66ef;
   --surface: rgba(255, 255, 255, 0.08);
   --surface-strong: rgba(255, 255, 255, 0.12);
   --surface-soft: rgba(255, 255, 255, 0.05);
@@ -12,12 +12,12 @@
   --accent: #ffd24a;
   --accent-deep: #1b2458;
   --accent-soft: #ffe89a;
-  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.28);
-  --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.18);
-  --radius-xl: 32px;
-  --radius-lg: 24px;
-  --radius-md: 18px;
-  --radius-sm: 14px;
+  --shadow-lg: 0 28px 72px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 16px 36px rgba(0, 0, 0, 0.16);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
   --max-width: 1180px;
 }
 
@@ -42,11 +42,17 @@ figure {
 body {
   min-height: 100vh;
   color: var(--text);
-  font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family:
+    "Avenir Next",
+    "Segoe UI",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(255, 210, 74, 0.18), transparent 28%),
-    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.1), transparent 24%),
-    linear-gradient(140deg, var(--bg-deep) 0%, var(--bg) 44%, var(--bg-warm) 100%);
+    radial-gradient(circle at top left, rgba(255, 210, 74, 0.12), transparent 26%),
+    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.08), transparent 22%),
+    linear-gradient(140deg, var(--bg-deep) 0%, var(--bg) 48%, var(--bg-warm) 100%);
 }
 
 body::before {
@@ -55,8 +61,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 34px 34px;
   mask-image: radial-gradient(circle at center, black 18%, transparent 82%);
 }
@@ -125,8 +131,8 @@ button {
 }
 
 .brand {
-  font-weight: 800;
-  font-size: 1.1rem;
+  font-weight: 750;
+  font-size: 1.02rem;
   color: var(--accent);
 }
 
@@ -141,6 +147,7 @@ button {
 .topbar-links a {
   position: relative;
   padding-bottom: 0.25rem;
+  transition: color 180ms ease;
 }
 
 .topbar-links a::after {
@@ -199,17 +206,23 @@ button {
 .hero-copy h1,
 .section-heading h2,
 .manifesto h2 {
-  font-family: Georgia, "Times New Roman", serif;
-  letter-spacing: -0.045em;
+  font-family:
+    "Avenir Next",
+    "Segoe UI",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+  letter-spacing: -0.065em;
 }
 
 .hero-copy h1 {
   display: grid;
-  gap: 0.18rem;
-  max-width: 11ch;
-  font-size: clamp(2.45rem, 5.1vw, 4.6rem);
-  font-weight: 700;
-  line-height: 0.94;
+  gap: 0.22rem;
+  max-width: 11.5ch;
+  font-size: clamp(2.2rem, 4.8vw, 4rem);
+  font-weight: 760;
+  line-height: 0.9;
   text-wrap: balance;
 }
 
@@ -219,6 +232,7 @@ button {
 
 .hero-title-accent {
   color: var(--accent);
+  opacity: 0.98;
 }
 
 .intro,
@@ -229,14 +243,14 @@ button {
 .platform-card p,
 .featured-quote p {
   color: var(--muted);
-  line-height: 1.7;
-  font-size: 1.02rem;
+  line-height: 1.68;
+  font-size: 1rem;
 }
 
 .intro {
   max-width: 42ch;
   margin-top: 22px;
-  font-size: 1.04rem;
+  font-size: 1.01rem;
 }
 
 .hero-actions,
@@ -272,7 +286,8 @@ button {
 .button {
   min-height: 48px;
   padding: 12px 20px;
-  font-weight: 700;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
 .button:hover,
@@ -295,7 +310,7 @@ button {
 .button-primary {
   color: var(--accent-deep);
   background: var(--accent);
-  box-shadow: 0 10px 28px rgba(255, 210, 74, 0.28);
+  box-shadow: 0 10px 24px rgba(255, 210, 74, 0.22);
 }
 
 .button-secondary {
@@ -328,7 +343,7 @@ button {
 .episode-card,
 .featured-episode {
   border: 1px solid var(--line-soft);
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.075);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-md);
 }
@@ -359,8 +374,8 @@ button {
   padding: 20px;
   border-radius: var(--radius-xl);
   background:
-    linear-gradient(145deg, rgba(255, 210, 74, 0.12), rgba(255, 255, 255, 0.02)),
-    rgba(255, 255, 255, 0.04);
+    linear-gradient(145deg, rgba(255, 210, 74, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow-lg);
 }
@@ -377,7 +392,7 @@ button {
 .cover-caption {
   max-width: 24rem;
   color: var(--accent-soft);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   letter-spacing: 0.03em;
 }
 
@@ -394,8 +409,9 @@ button {
 .section-heading h2,
 .manifesto h2 {
   max-width: 13ch;
-  font-size: clamp(2rem, 4.6vw, 3.8rem);
-  line-height: 0.98;
+  font-size: clamp(1.72rem, 4vw, 2.85rem);
+  line-height: 0.96;
+  font-weight: 760;
 }
 
 .section-accent {
@@ -410,8 +426,8 @@ button {
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
   background:
-    linear-gradient(135deg, rgba(255, 210, 74, 0.14), rgba(255, 255, 255, 0.06)),
-    rgba(255, 255, 255, 0.05);
+    linear-gradient(135deg, rgba(255, 210, 74, 0.08), rgba(255, 255, 255, 0.045)),
+    rgba(255, 255, 255, 0.045);
   box-shadow: var(--shadow-md);
 }
 
@@ -456,8 +472,10 @@ button {
 .episode-card h3,
 .platform-card strong {
   margin-bottom: 10px;
-  font-size: 1.32rem;
-  line-height: 1.15;
+  font-size: 1.18rem;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .featured-episode {
@@ -468,8 +486,8 @@ button {
   border-radius: var(--radius-xl);
   margin-bottom: 20px;
   background:
-    linear-gradient(135deg, rgba(255, 210, 74, 0.08), rgba(255, 255, 255, 0.04)),
-    var(--surface);
+    linear-gradient(135deg, rgba(255, 210, 74, 0.045), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.07);
 }
 
 .featured-episode.is-loading {
@@ -489,9 +507,9 @@ button {
   display: inline-flex;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255, 210, 74, 0.14);
+  background: rgba(255, 210, 74, 0.12);
   color: var(--accent-soft);
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
@@ -568,7 +586,7 @@ button {
   position: relative;
   padding: 24px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -585,7 +603,7 @@ button {
 .featured-quote p {
   position: relative;
   z-index: 1;
-  font-size: 1.08rem;
+  font-size: 1.02rem;
 }
 
 .episode-list {
@@ -608,25 +626,25 @@ button {
   gap: 14px;
   min-height: 190px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05)),
-    var(--surface-soft);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045)),
+    rgba(255, 255, 255, 0.045);
 }
 
 .platform-card span {
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  font-size: 0.73rem;
   font-weight: 700;
 }
 
 .platform-link {
   min-height: 42px;
   padding: 8px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
-  font-weight: 700;
+  font-weight: 650;
   align-self: end;
   justify-self: start;
 }
@@ -667,6 +685,7 @@ button {
   padding: 18px 16px 36px;
   text-align: center;
   color: var(--muted);
+  font-size: 0.94rem;
 }
 
 @keyframes hero-enter {
@@ -774,7 +793,7 @@ button {
 
   .hero-copy h1 {
     max-width: 10.5ch;
-    font-size: clamp(2.1rem, 10vw, 3rem);
+    font-size: clamp(1.9rem, 9.2vw, 2.6rem);
   }
 
   .intro {
