@@ -1,43 +1,143 @@
-// Remplace les valeurs ci-dessous par tes vrais liens Apple Podcasts et tes métadonnées.
-const episodes = [
-  {
-    title: "Épisode 01 — De Paris à Grasse : les coulisses d'un métier aussi rare que fascinant",
-    guest: "Manon, parfumeur",
-    date: "5 avril 2026",
-    publishedAt: "2026-04-05",
-    duration: "58 min",
-    summary:
-      "Comment devient-on parfumeur quand on quitte Paris pour Grasse ? Manon raconte les coulisses d'un métier plus rare qu'être astronaute — moins de 500 parfumeurs dans le monde — et ce que le Sud change dans une trajectoire de vie.",
-    quote:
-      "Moins de 500 parfumeurs dans le monde. C'est plus rare qu'être astronaute.",
-    listenUrl: "https://open.spotify.com/episode/3AEDAU8YAFku1jHu6mKN4l",
-    notesUrl: ""
-  }
-];
-
-const platforms = {
-  apple: "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
-  spotify: "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
-  amazon: "https://music.amazon.com/podcasts/cdf06260-950b-40bd-9c6b-81dc41aa478e/sud-stories",
-  rss: "https://feed.ausha.co/5J8awtVWNgxv"
-};
+const PAGE_SIZE = 3;
 
 const featuredEpisode = document.querySelector("#featured-episode");
 const episodeList = document.querySelector("#episode-list");
+const episodesTitle = document.querySelector("#episodes-title");
+const episodesKicker = episodesTitle
+  ?.closest(".section-heading")
+  ?.querySelector(".section-kicker");
+const heroCount = document.querySelector("#hero-episode-count");
+const heroLabel = document.querySelector("#hero-episode-label");
+
+let visibleCount = PAGE_SIZE;
+let site = {};
+let episodes = [];
+let platforms = {};
 
 function isRealUrl(url) {
   return typeof url === "string" && url.trim() !== "" && url !== "#";
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+
+    return entities[char];
+  });
+}
+
 function isNew(dateStr) {
   if (!dateStr) return false;
+
   const published = new Date(dateStr);
+  if (Number.isNaN(published.getTime())) return false;
+
   const days = (Date.now() - published.getTime()) / (1000 * 60 * 60 * 24);
-  return days <= 14;
+  return days >= 0 && days <= 14;
+}
+
+async function loadSiteData() {
+  const response = await fetch("./content.json", { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(`Unable to load content.json (${response.status})`);
+  }
+
+  const data = await response.json();
+  site = data.site || {};
+  episodes = Array.isArray(data.episodes) ? data.episodes : [];
+  platforms = site.platforms || {};
+}
+
+function showLoadingState() {
+  if (featuredEpisode) {
+    featuredEpisode.classList.add("is-loading");
+    featuredEpisode.innerHTML = '<p class="content-loading">Chargement des episodes</p>';
+  }
+
+  if (episodeList) {
+    episodeList.innerHTML = "";
+  }
+}
+
+function showErrorState() {
+  if (featuredEpisode) {
+    featuredEpisode.classList.remove("is-loading");
+    featuredEpisode.innerHTML = `
+      <div class="featured-copy">
+        <div class="featured-meta">
+          <span class="pill">Indisponible</span>
+        </div>
+        <h3>Le contenu n'a pas pu etre charge.</h3>
+        <p class="content-error">Verifie que <code>content.json</code> est bien servi par le site.</p>
+      </div>
+    `;
+  }
+
+  if (episodeList) {
+    episodeList.innerHTML = "";
+  }
+}
+
+function injectStructuredData() {
+  const sameAs = Object.values(platforms).filter(isRealUrl);
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "PodcastSeries",
+      name: site.name,
+      url: site.url,
+      description: site.description,
+      image: site.image,
+      inLanguage: site.language,
+      genre: site.genre,
+      sameAs
+    },
+    ...episodes.map((episode) => ({
+      "@context": "https://schema.org",
+      "@type": "PodcastEpisode",
+      name: episode.title,
+      datePublished: episode.publishedAt,
+      timeRequired: episode.timeRequired,
+      description: episode.summary,
+      url: episode.listenUrl,
+      image: site.image,
+      inLanguage: site.language,
+      partOfSeries: {
+        "@type": "PodcastSeries",
+        name: site.name
+      }
+    }))
+  ];
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(structuredData);
+  document.head.appendChild(script);
 }
 
 function buildShareButton(episode) {
-  return `<button class="share-btn" data-share-url="${episode.listenUrl}" data-share-title="${episode.title}" aria-label="Partager cet épisode">Partager</button>`;
+  if (!isRealUrl(episode.listenUrl)) {
+    return "";
+  }
+
+  return `
+    <button
+      class="share-btn"
+      type="button"
+      data-share-url="${escapeHtml(episode.listenUrl)}"
+      data-share-title="${escapeHtml(episode.title)}"
+      aria-label="Partager cet épisode"
+    >
+      Partager
+    </button>
+  `;
 }
 
 function buildExternalLink(className, href, label, ariaLabel) {
@@ -45,10 +145,58 @@ function buildExternalLink(className, href, label, ariaLabel) {
     return "";
   }
 
-  return `<a class="${className}" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${ariaLabel}">${label}</a>`;
+  return `
+    <a
+      class="${className}"
+      href="${escapeHtml(href)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="${escapeHtml(ariaLabel)}"
+    >
+      ${escapeHtml(label)}
+    </a>
+  `;
+}
+
+function buildMetaPills(episode, featured = false) {
+  const pills = [];
+
+  if (featured) {
+    pills.push('<span class="pill">À la une</span>');
+  }
+
+  if (isNew(episode.publishedAt)) {
+    pills.push('<span class="pill pill-new">Nouveau</span>');
+  }
+
+  if (episode.date) {
+    pills.push(`<span class="pill">${escapeHtml(episode.date)}</span>`);
+  }
+
+  if (episode.duration) {
+    pills.push(`<span class="pill">${escapeHtml(episode.duration)}</span>`);
+  }
+
+  return pills.join("");
 }
 
 function renderFeaturedEpisode(episode) {
+  if (!featuredEpisode) return;
+  featuredEpisode.classList.remove("is-loading");
+
+  if (!episode) {
+    featuredEpisode.innerHTML = `
+      <div class="featured-copy">
+        <div class="featured-meta">
+          <span class="pill">Bientôt</span>
+        </div>
+        <h3>Les épisodes arrivent.</h3>
+        <p>Le site est prêt. La première histoire sera publiée ici dès sa mise en ligne.</p>
+      </div>
+    `;
+    return;
+  }
+
   const links = [
     buildExternalLink(
       "button button-primary",
@@ -61,34 +209,25 @@ function renderFeaturedEpisode(episode) {
       episode.notesUrl,
       "Voir les notes",
       `Voir les notes de ${episode.title}, ouverture dans un nouvel onglet`
-    )
+    ),
+    buildShareButton(episode)
   ]
     .filter(Boolean)
     .join("");
 
-  const nouveauPill = isNew(episode.publishedAt) ? `<span class="pill pill-new">Nouveau</span>` : "";
-
   featuredEpisode.innerHTML = `
     <div class="featured-copy">
-      <div class="featured-meta">
-        <span class="pill">À la une</span>
-        ${nouveauPill}
-        <span class="pill">${episode.date}</span>
-        <span class="pill">${episode.duration}</span>
-      </div>
-      <h3>${episode.title}</h3>
-      <p><strong>${episode.guest}</strong></p>
-      <p>${episode.summary}</p>
-      <div class="featured-links">${links}${buildShareButton(episode)}</div>
+      <div class="featured-meta">${buildMetaPills(episode, true)}</div>
+      <h3>${escapeHtml(episode.title)}</h3>
+      <p><strong>${escapeHtml(episode.guest)}</strong></p>
+      <p>${escapeHtml(episode.summary)}</p>
+      <div class="featured-links">${links}</div>
     </div>
     <aside class="featured-quote">
-      <p>"${episode.quote || episode.summary}"</p>
+      <p>${escapeHtml(episode.quote || episode.summary)}</p>
     </aside>
   `;
 }
-
-const PAGE_SIZE = 3;
-let visibleCount = PAGE_SIZE;
 
 function buildEpisodeCard(episode) {
   const links = [
@@ -103,29 +242,26 @@ function buildEpisodeCard(episode) {
       episode.notesUrl,
       "Notes",
       `Voir les notes de ${episode.title}, ouverture dans un nouvel onglet`
-    )
+    ),
+    buildShareButton(episode)
   ]
     .filter(Boolean)
     .join("");
 
-  const nouveauPill = isNew(episode.publishedAt) ? `<span class="pill pill-new">Nouveau</span>` : "";
-
   return `
     <article class="episode-card">
-      <div class="episode-meta">
-        ${nouveauPill}
-        <span class="pill">${episode.date}</span>
-        <span class="pill">${episode.duration}</span>
-      </div>
-      <h3>${episode.title}</h3>
-      <p><strong>${episode.guest}</strong></p>
-      <p>${episode.summary}</p>
-      <div class="episode-links">${links}${buildShareButton(episode)}</div>
+      <div class="episode-meta">${buildMetaPills(episode)}</div>
+      <h3>${escapeHtml(episode.title)}</h3>
+      <p><strong>${escapeHtml(episode.guest)}</strong></p>
+      <p>${escapeHtml(episode.summary)}</p>
+      <div class="episode-links">${links}</div>
     </article>
   `;
 }
 
 function renderEpisodeList(items) {
+  if (!episodeList) return;
+
   const rest = items.slice(1);
   const visible = rest.slice(0, visibleCount);
   const hasMore = visibleCount < rest.length;
@@ -135,9 +271,12 @@ function renderEpisodeList(items) {
   const existing = document.querySelector(".load-more-btn");
   if (existing) existing.remove();
 
+  if (!rest.length) return;
+
   if (hasMore) {
     const btn = document.createElement("button");
     btn.className = "load-more-btn";
+    btn.type = "button";
     btn.textContent = `Voir plus d'épisodes (${rest.length - visibleCount} restants)`;
     btn.addEventListener("click", () => {
       visibleCount += PAGE_SIZE;
@@ -151,10 +290,12 @@ function wirePlatformLinks() {
   document.querySelectorAll("[data-platform]").forEach((link) => {
     const key = link.dataset.platform;
     const href = platforms[key];
+    const card = link.closest(".platform-card");
 
     if (!isRealUrl(href)) {
       link.removeAttribute("href");
       link.setAttribute("aria-disabled", "true");
+      if (card) card.dataset.disabled = "true";
       return;
     }
 
@@ -168,73 +309,143 @@ function wirePlatformLinks() {
   });
 }
 
-const episodesTitle = document.querySelector("#episodes-title");
-const episodesKicker = document.querySelector("#episodes-title")?.closest(".section-heading")?.querySelector(".section-kicker");
-if (episodesTitle && episodes.length === 1) {
-  episodesTitle.textContent = "Le premier épisode";
-  if (episodesKicker) episodesKicker.textContent = "Première publication";
+function syncEpisodeLabels(count) {
+  if (episodesTitle && count === 1) {
+    episodesTitle.textContent = "Le premier épisode";
+    if (episodesKicker) episodesKicker.textContent = "Première publication";
+  } else if (episodesTitle) {
+    episodesTitle.textContent = "Les derniers épisodes";
+    if (episodesKicker) episodesKicker.textContent = "Dernières publications";
+  }
+
+  if (episodesTitle && count === 0) {
+    episodesTitle.textContent = "Les épisodes arrivent";
+    if (episodesKicker) episodesKicker.textContent = "À venir";
+  }
+
+  if (heroCount) {
+    heroCount.textContent = String(count);
+  }
+
+  if (heroLabel) {
+    heroLabel.textContent = count === 1 ? "épisode publié" : "épisodes publiés";
+  }
 }
 
-const heroCount = document.querySelector("#hero-episode-count");
-const heroLabel = document.querySelector("#hero-episode-label");
-if (heroCount) heroCount.textContent = episodes.length;
-if (heroLabel) heroLabel.textContent = episodes.length === 1 ? "épisode publié" : "épisodes publiés";
+async function copyText(value) {
+  if (!value) return false;
 
-renderFeaturedEpisode(episodes[0]);
-renderEpisodeList(episodes);
-wirePlatformLinks();
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
 
-document.addEventListener("click", async (e) => {
-  const copyBtn = e.target.closest("[data-copy-url]");
-  if (copyBtn) {
-    e.preventDefault();
-    e.stopPropagation();
-    await navigator.clipboard.writeText(copyBtn.dataset.copyUrl);
-    const orig = copyBtn.textContent;
-    copyBtn.textContent = "Copié !";
-    setTimeout(() => { copyBtn.textContent = orig; }, 2000);
+function setTemporaryLabel(element, nextLabel, duration = 2000) {
+  const originalLabel = element.textContent;
+  element.textContent = nextLabel;
+  window.setTimeout(() => {
+    element.textContent = originalLabel;
+  }, duration);
+}
+
+function wireActionHandlers() {
+  document.addEventListener("click", async (event) => {
+    const copyBtn = event.target.closest("[data-copy-url]");
+    if (copyBtn) {
+      event.preventDefault();
+      const copied = await copyText(copyBtn.dataset.copyUrl);
+      if (copied) {
+        setTemporaryLabel(copyBtn, "Copié !");
+      }
+      return;
+    }
+
+    const shareBtn = event.target.closest("[data-share-url]");
+    if (!shareBtn) return;
+
+    const url = shareBtn.dataset.shareUrl;
+    const title = shareBtn.dataset.shareTitle;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+        return;
+      } catch (_) {
+        // Fall back to clipboard when the share sheet is cancelled or unavailable.
+      }
+    }
+
+    const copied = await copyText(url);
+    if (copied) {
+      setTemporaryLabel(shareBtn, "Lien copié !");
+    }
+  });
+}
+
+function wireFadeIn() {
+  if (!("IntersectionObserver" in window)) {
     return;
   }
 
-  const btn = e.target.closest("[data-share-url]");
-  if (!btn) return;
-  const url = btn.dataset.shareUrl;
-  const title = btn.dataset.shareTitle;
-  if (navigator.share) {
-    try { await navigator.share({ title, url }); } catch (_) {}
-  } else {
-    await navigator.clipboard.writeText(url);
-    const original = btn.textContent;
-    btn.textContent = "Lien copié !";
-    setTimeout(() => { btn.textContent = original; }, 2000);
-  }
-});
-
-// Fade-in on scroll
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
       entry.target.classList.add("visible");
       fadeObserver.unobserve(entry.target);
-    }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".section, .info-card, .platform-card").forEach((element) => {
+    element.classList.add("fade-in");
+    fadeObserver.observe(element);
   });
-}, { threshold: 0.1 });
+}
 
-document.querySelectorAll(".section, .info-card, .platform-card").forEach(el => {
-  el.classList.add("fade-in");
-  fadeObserver.observe(el);
-});
+function wireActiveNav() {
+  if (!("IntersectionObserver" in window)) {
+    return;
+  }
 
-// Active nav on scroll
-const navLinks = document.querySelectorAll(".topbar-links a[href^='#']");
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove("nav-active"));
+  const navLinks = document.querySelectorAll(".topbar-links a[href^='#']");
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+
+      navLinks.forEach((link) => link.classList.remove("nav-active"));
       const active = document.querySelector(`.topbar-links a[href="#${entry.target.id}"]`);
       if (active) active.classList.add("nav-active");
-    }
-  });
-}, { threshold: 0.4 });
+    });
+  }, { threshold: 0.4 });
 
-document.querySelectorAll("section[id]").forEach(s => navObserver.observe(s));
+  document.querySelectorAll("section[id]").forEach((section) => navObserver.observe(section));
+}
+
+function init() {
+  visibleCount = PAGE_SIZE;
+  injectStructuredData();
+  syncEpisodeLabels(episodes.length);
+  renderFeaturedEpisode(episodes[0]);
+  renderEpisodeList(episodes);
+  wirePlatformLinks();
+  wireActionHandlers();
+  wireFadeIn();
+  wireActiveNav();
+}
+
+async function boot() {
+  showLoadingState();
+
+  try {
+    await loadSiteData();
+    init();
+  } catch (error) {
+    console.error(error);
+    syncEpisodeLabels(0);
+    showErrorState();
+  }
+}
+
+boot();

@@ -13,9 +13,9 @@
       content="Sud Stories, podcast sud de la France, podcast Provence, Spotify, Amazon Music, Apple Podcasts, Côte d'Azur, French Riviera, interviews, entrepreneuriat"
     />
     <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#0c46eb" />
+    <meta name="theme-color" content="#0b3274" />
     <link rel="canonical" href="https://xander006.github.io/sudstories/" />
-    <link rel="icon" href="./Logo%20design%20for%20SUD%20Stories%20podcast.png" />
+    <link rel="icon" href="./sud-stories-cover.png" />
     <link rel="preconnect" href="https://open.spotify.com" />
     <link rel="dns-prefetch" href="https://open.spotify.com" />
     <link rel="preconnect" href="https://podcasts.apple.com" />
@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://music.amazon.com" />
     <link rel="dns-prefetch" href="https://music.amazon.com" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sud Stories" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:url" content="https://xander006.github.io/sudstories/" />
     <meta property="og:title" content="Sud Stories | Le podcast" />
@@ -32,7 +33,7 @@
     />
     <meta
       property="og:image"
-      content="https://xander006.github.io/sudstories/Logo%20design%20for%20SUD%20Stories%20podcast.png"
+      content="https://xander006.github.io/sudstories/sud-stories-cover.png"
     />
     <meta property="og:image:alt" content="Visuel du podcast Sud Stories" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -43,43 +44,10 @@
     />
     <meta
       name="twitter:image"
-      content="https://xander006.github.io/sudstories/Logo%20design%20for%20SUD%20Stories%20podcast.png"
+      content="https://xander006.github.io/sudstories/sud-stories-cover.png"
     />
+    <meta name="twitter:image:alt" content="Visuel du podcast Sud Stories" />
     <link rel="stylesheet" href="./styles.css" />
-    <script type="application/ld+json">
-      [
-        {
-          "@context": "https://schema.org",
-          "@type": "PodcastSeries",
-          "name": "Sud Stories",
-          "url": "https://xander006.github.io/sudstories/",
-          "description": "Sud Stories est le podcast qui part à la rencontre de celles et ceux qui ont un lien avec le Sud de la France.",
-          "image": "https://xander006.github.io/sudstories/Logo%20design%20for%20SUD%20Stories%20podcast.png",
-          "inLanguage": "fr",
-          "genre": ["Interview", "Entrepreneuriat", "Lifestyle"],
-          "sameAs": [
-            "https://podcasts.apple.com/fr/podcast/sud-stories/id1891655073",
-            "https://open.spotify.com/show/1w3CWTSWs3tRKEpSyODo94",
-            "https://music.amazon.com/podcasts/cdf06260-950b-40bd-9c6b-81dc41aa478e/sud-stories"
-          ]
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "PodcastEpisode",
-          "name": "Ep.1 : Manon, parfumeur — De Paris à Grasse : les coulisses d'un métier aussi rare que fascinant",
-          "datePublished": "2026-04-05",
-          "timeRequired": "PT58M",
-          "description": "Comment devient-on parfumeur quand on quitte Paris pour Grasse ? Manon raconte les coulisses d'un métier plus rare qu'être astronaute — moins de 500 parfumeurs dans le monde.",
-          "url": "https://open.spotify.com/episode/3AEDAU8YAFku1jHu6mKN4l",
-          "image": "https://xander006.github.io/sudstories/Logo%20design%20for%20SUD%20Stories%20podcast.png",
-          "inLanguage": "fr",
-          "partOfSeries": {
-            "@type": "PodcastSeries",
-            "name": "Sud Stories"
-          }
-        }
-      ]
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Aller au contenu</a>
@@ -98,8 +66,8 @@
           <div class="hero-copy">
             <p class="eyebrow">Des parcours, des rencontres, un territoire</p>
             <h1>
-              <span class="hero-title-line">Le podcast qui démonte</span>
-              <span class="hero-title-line">les clichés sur le</span>
+              <span class="hero-title-line">Le podcast qui raconte</span>
+              <span class="hero-title-line">les trajectoires derrière le</span>
               <span class="hero-title-line hero-title-accent">Sud de la France.</span>
             </h1>
             <p class="intro">
@@ -129,9 +97,10 @@
           <figure class="cover-card">
             <img
               class="cover-image"
-              src="./Logo%20design%20for%20SUD%20Stories%20podcast.png"
+              src="./sud-stories-cover.png"
               alt="Visuel du podcast Sud Stories"
             />
+            <figcaption class="cover-caption">Une voix ancrée entre mer, collines et métiers rares.</figcaption>
           </figure>
         </section>
       </header>
@@ -212,23 +181,29 @@
           </div>
 
           <div class="platform-grid" aria-label="Plateformes d'écoute">
-            <a class="platform-card" href="#" data-platform="apple">
+            <article class="platform-card">
               <span>Apple Podcasts</span>
-              <strong>Écouter</strong>
-            </a>
-            <a class="platform-card" href="#" data-platform="spotify">
+              <strong>Le catalogue complet</strong>
+              <a class="platform-link" href="#" data-platform="apple">Écouter</a>
+            </article>
+            <article class="platform-card">
               <span>Spotify</span>
-              <strong>Écouter</strong>
-            </a>
-            <a class="platform-card" href="#" data-platform="amazon">
+              <strong>Suivre les nouvelles sorties</strong>
+              <a class="platform-link" href="#" data-platform="spotify">Écouter</a>
+            </article>
+            <article class="platform-card">
               <span>Amazon Music</span>
-              <strong>Écouter</strong>
-            </a>
-            <a class="platform-card" href="#" data-platform="rss">
+              <strong>Disponible en mobilité</strong>
+              <a class="platform-link" href="#" data-platform="amazon">Écouter</a>
+            </article>
+            <article class="platform-card platform-card-rss">
               <span>Flux RSS</span>
-              <strong>Écouter</strong>
-              <button class="rss-copy-btn" data-copy-url="https://feed.ausha.co/5J8awtVWNgxv">Copier le lien</button>
-            </a>
+              <strong>Pour les apps indépendantes</strong>
+              <div class="platform-actions">
+                <a class="platform-link" href="#" data-platform="rss">Ouvrir</a>
+                <button class="rss-copy-btn" type="button" data-copy-url="https://feed.ausha.co/5J8awtVWNgxv">Copier le lien</button>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -240,7 +215,7 @@
             </div>
             <div>
               <p>Tu connais quelqu'un dont le parcours mérite d'être entendu ? On est partants.</p>
-              <a class="button button-primary" href="mailto:contact@sudstories.com" style="margin-top:20px;display:inline-flex;">Envoyer un message</a>
+              <a class="button button-primary contact-button" href="mailto:contact@sudstories.com">Envoyer un message</a>
             </div>
           </div>
         </section>
